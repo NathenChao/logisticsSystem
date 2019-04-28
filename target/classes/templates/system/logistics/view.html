@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm">
+                        <input id="id" name="id" th:value="${logistics.id}" type="hidden">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">物流单号：</label>
+                            <div class="col-sm-8">
+                                <label class="col-sm-3 control-label" th:text="${logistics.no}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">发送人姓名：</label>
+                            <div class="col-sm-8">
+                                <label class="col-sm-3 control-label" th:text="${logistics.sendName}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">发送人地址：</label>
+                            <div class="col-sm-8">
+                                <label class="col-sm-3 control-label" th:text="${logistics.sendAddress}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">发送人电话：</label>
+                            <div class="col-sm-8">
+                                <label class="col-sm-3 control-label" th:text="${logistics.sendTelephone}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">发送省份：</label>
+                            <div class="col-sm-8">
+                                <label class="col-sm-3 control-label" th:text="${logistics.sendProvince}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">发送城市：</label>
+                            <div class="col-sm-8">
+                                <label class="col-sm-3 control-label" th:text="${logistics.sendCity}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">发送时间：</label>
+                            <div class="col-sm-8">
+                                <label class="col-sm-3 control-label" th:text="${logistics.sendDate}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">接收人姓名：</label>
+                            <div class="col-sm-8">
+                                <label class="col-sm-3 control-label" th:text="${logistics.consigneeName}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">接收人地址：</label>
+                            <div class="col-sm-8">
+                                <label class="col-sm-3 control-label" th:text="${logistics.consigneeAddress}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">接收人电话：</label>
+                            <div class="col-sm-8">
+                                <label class="col-sm-3 control-label" th:text="${logistics.consigneeTelephone}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">到达省份：</label>
+                            <div class="col-sm-8">
+                                <label class="col-sm-3 control-label" th:text="${logistics.arriveProvince}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">到达城市：</label>
+                            <div class="col-sm-8">
+                                <label class="col-sm-3 control-label" th:text="${logistics.arriveCity}"></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">到达时间：</label>
+                            <div class="col-sm-8">
+                                <label class="col-sm-3 control-label" th:text="${logistics.arriveDate}"></label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+</body>
+</html>

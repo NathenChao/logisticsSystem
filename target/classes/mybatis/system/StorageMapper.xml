@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.StorageDao">
+
+    <select id="get" resultType="com.bootdo.system.domain.StorageDO">
+        select `id`,`good_name`,`good_number`,`good_count` from t_storage where id = #{value}
+    </select>
+
+    <select id="list" resultType="com.bootdo.system.domain.StorageDO">
+        select `id`,`good_name`,`good_number`,`good_count` from t_storage
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="goodName != null and goodName != ''">and good_name = #{goodName}</if>
+            <if test="goodNumber != null and goodNumber != ''">and good_number = #{goodNumber}</if>
+            <if test="goodCount != null and goodCount != ''">and good_count = #{goodCount}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from t_storage
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="goodName != null and goodName != ''">and good_name = #{goodName}</if>
+            <if test="goodNumber != null and goodNumber != ''">and good_number = #{goodNumber}</if>
+            <if test="goodCount != null and goodCount != ''">and good_count = #{goodCount}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.bootdo.system.domain.StorageDO" useGeneratedKeys="true" keyProperty="id">
+        insert into t_storage
+        (
+        `good_name`,
+        `good_number`,
+        `good_count`
+        )
+        values
+        (
+        #{goodName},
+        #{goodNumber},
+        #{goodCount}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.bootdo.system.domain.StorageDO">
+        update t_storage
+        <set>
+            <if test="goodName != null">`good_name` = #{goodName},</if>
+            <if test="goodNumber != null">`good_number` = #{goodNumber},</if>
+            <if test="goodCount != null">`good_count` = #{goodCount}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+        delete from t_storage where id = #{value}
+    </delete>
+
+    <delete id="batchRemove">
+        delete from t_storage where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

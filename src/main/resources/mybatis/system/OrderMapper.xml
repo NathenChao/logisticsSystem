@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.OrderDao">
+
+    <select id="get" resultType="com.bootdo.system.domain.OrderDO">
+        select
+        `id`,`order_sn`,`customer_number`,`customer_name`,`total_price`,`total_count`,`pay_date`,`consignee_name`,`consignee_address`,`consignee_telephone`,`user_id`,`create_date`,`status`,`description`,`good_number`,`good_name`
+        from t_order where id = #{value}
+    </select>
+
+    <select id="list" resultType="com.bootdo.system.domain.OrderDO">
+        select
+        `id`,`order_sn`,`customer_number`,`customer_name`,`total_price`,`total_count`,`pay_date`,`consignee_name`,`consignee_address`,`consignee_telephone`,`user_id`,`create_date`,`status`,`description`,`good_number`,`good_name`
+        from t_order
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="orderSn != null and orderSn != ''">and (order_sn like CONCAT('%', #{orderSn}, '%') or
+                customer_number like CONCAT('%', #{orderSn}, '%'))
+            </if>
+            <if test="customerNumber != null and customerNumber != ''">and customer_number = #{customerNumber}</if>
+            <if test="customerName != null and customerName != ''">and customer_name = #{customerName}</if>
+            <if test="totalPrice != null and totalPrice != ''">and total_price = #{totalPrice}</if>
+            <if test="totalCount != null and totalCount != ''">and total_count = #{totalCount}</if>
+            <if test="payDate != null and payDate != ''">and pay_date = #{payDate}</if>
+            <if test="consigneeName != null and consigneeName != ''">and consignee_name = #{consigneeName}</if>
+            <if test="consigneeAddress != null and consigneeAddress != ''">and consignee_address = #{consigneeAddress}
+            </if>
+            <if test="consigneeTelephone != null and consigneeTelephone != ''">and consignee_telephone =
+                #{consigneeTelephone}
+            </if>
+            <if test="userId != null and userId != ''">and user_id = #{userId}</if>
+            <if test="createDate != null and createDate != ''">and create_date = #{createDate}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+            <if test="description != null and description != ''">and description = #{description}</if>
+            <if test="goodNumber != null and goodNumber != ''">and good_number = #{goodNumber}</if>
+            <if test="goodName != null and goodName != ''">and good_name = #{goodName}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="statisticsCount" resultType="int">
+        select count(*) from (select customer_name from t_order where status =2 GROUP BY customer_name) t
+    </select>
+
+    <select id="statistics" resultType="com.bootdo.system.domain.OrderDO">
+        select customer_name,SUM(total_price) total_price,SUM(total_count) total_count from t_order where status =2
+        GROUP BY customer_name
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from t_order
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="orderSn != null and orderSn != ''">and (order_sn like CONCAT('%', #{orderSn}, '%') or
+                customer_number like CONCAT('%', #{orderSn}, '%'))
+            </if>
+            <if test="customerNumber != null and customerNumber != ''">and customer_number = #{customerNumber}</if>
+            <if test="customerName != null and customerName != ''">and customer_name = #{customerName}</if>
+            <if test="totalPrice != null and totalPrice != ''">and total_price = #{totalPrice}</if>
+            <if test="totalCount != null and totalCount != ''">and total_count = #{totalCount}</if>
+            <if test="payDate != null and payDate != ''">and pay_date = #{payDate}</if>
+            <if test="consigneeName != null and consigneeName != ''">and consignee_name = #{consigneeName}</if>
+            <if test="consigneeAddress != null and consigneeAddress != ''">and consignee_address = #{consigneeAddress}
+            </if>
+            <if test="consigneeTelephone != null and consigneeTelephone != ''">and consignee_telephone =
+                #{consigneeTelephone}
+            </if>
+            <if test="userId != null and userId != ''">and user_id = #{userId}</if>
+            <if test="createDate != null and createDate != ''">and create_date = #{createDate}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+            <if test="description != null and description != ''">and description = #{description}</if>
+            <if test="goodNumber != null and goodNumber != ''">and good_number = #{goodNumber}</if>
+            <if test="goodName != null and goodName != ''">and good_name = #{goodName}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.bootdo.system.domain.OrderDO" useGeneratedKeys="true" keyProperty="id">
+        insert into t_order
+        (
+        `order_sn`,
+        `customer_number`,
+        `customer_name`,
+        `total_price`,
+        `total_count`,
+        `pay_date`,
+        `consignee_name`,
+        `consignee_address`,
+        `consignee_telephone`,
+        `user_id`,
+        `create_date`,
+        `status`,
+        `description`,
+        `good_number`,
+        `good_name`
+        )
+        values
+        (
+        #{orderSn},
+        #{customerName},
+        #{totalPrice},
+        #{totalCount},
+        #{payDate},
+        #{consigneeName},
+        #{consigneeAddress},
+        #{consigneeTelephone},
+        #{userId},
+        #{createDate},
+        #{status},
+        #{description},
+        #{goodNumber},
+        #{goodName}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.bootdo.system.domain.OrderDO">
+        update t_order
+        <set>
+            <if test="orderSn != null">`order_sn` = #{orderSn},</if>
+            <if test="customerNumber != null">`customer_number` = #{customerNumber},</if>
+            <if test="customerName != null">`customer_name` = #{customerName},</if>
+            <if test="totalPrice != null">`total_price` = #{totalPrice},</if>
+            <if test="totalCount != null">`total_count` = #{totalCount},</if>
+            <if test="payDate != null">`pay_date` = #{payDate},</if>
+            <if test="consigneeName != null">`consignee_name` = #{consigneeName},</if>
+            <if test="consigneeAddress != null">`consignee_address` = #{consigneeAddress},</if>
+            <if test="consigneeTelephone != null">`consignee_telephone` = #{consigneeTelephone},</if>
+            <if test="userId != null">`user_id` = #{userId},</if>
+            <if test="createDate != null">`create_date` = #{createDate},</if>
+            <if test="status != null">`status` = #{status},</if>
+            <if test="description != null">`description` = #{description},</if>
+            <if test="goodNumber != null">`good_number` = #{goodNumber},</if>
+            <if test="goodName != null">`good_name` = #{goodName}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+        delete from t_order where id = #{value}
+    </delete>
+
+    <delete id="batchRemove">
+        delete from t_order where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

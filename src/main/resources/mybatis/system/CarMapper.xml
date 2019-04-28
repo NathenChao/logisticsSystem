@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 绑定dao接口,面向接口编程 -->
+<mapper namespace="com.bootdo.system.dao.CarDao">
+    <!-- resultType 返回值类型 -->
+    <select id="get" resultType="com.bootdo.system.domain.CarDO">
+        select `id`,`type`,`name`,`no`,`driver_name`,`driver_telephone`,`driver_age`,`car_age`,`weight`,`status` from
+        t_car where id = #{value}
+    </select>
+
+    <select id="list" resultType="com.bootdo.system.domain.CarDO">
+        select `id`,`type`,`name`,`no`,`driver_name`,`driver_telephone`,`driver_age`,`car_age`,`weight`,`status` from
+        t_car
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="type != null and type != ''">and type = #{type}</if>
+            <if test="name != null and name != ''">and name like CONCAT('%', #{name}, '%')</if>
+            <if test="no != null and no != ''">and no = #{no}</if>
+            <if test="driverName != null and driverName != ''">and driver_name = #{driverName}</if>
+            <if test="driverTelephone != null and driverTelephone != ''">and driver_telephone = #{driverTelephone}</if>
+            <if test="driverAge != null and driverAge != ''">and driver_age = #{driverAge}</if>
+            <if test="carAge != null and carAge != ''">and car_age = #{carAge}</if>
+            <if test="weight != null and weight != ''">and weight = #{weight}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from t_car
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="type != null and type != ''">and type = #{type}</if>
+            <if test="name != null and name != ''">and name like CONCAT('%', #{name}, '%')</if>
+            <if test="no != null and no != ''">and no = #{no}</if>
+            <if test="driverName != null and driverName != ''">and driver_name = #{driverName}</if>
+            <if test="driverTelephone != null and driverTelephone != ''">and driver_telephone = #{driverTelephone}</if>
+            <if test="driverAge != null and driverAge != ''">and driver_age = #{driverAge}</if>
+            <if test="carAge != null and carAge != ''">and car_age = #{carAge}</if>
+            <if test="weight != null and weight != ''">and weight = #{weight}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.bootdo.system.domain.CarDO" useGeneratedKeys="true" keyProperty="id">
+        insert into t_car
+        (
+        `type`,
+        `name`,
+        `no`,
+        `driver_name`,
+        `driver_telephone`,
+        `driver_age`,
+        `car_age`,
+        `weight`,
+        `status`
+        )
+        values
+        (
+        #{type},
+        #{name},
+        #{no},
+        #{driverName},
+        #{driverTelephone},
+        #{driverAge},
+        #{carAge},
+        #{weight},
+        #{status}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.bootdo.system.domain.CarDO">
+        update t_car
+        <set>
+            <if test="type != null">`type` = #{type},</if>
+            <if test="name != null">`name` = #{name},</if>
+            <if test="no != null">`no` = #{no},</if>
+            <if test="driverName != null">`driver_name` = #{driverName},</if>
+            <if test="driverTelephone != null">`driver_telephone` = #{driverTelephone},</if>
+            <if test="driverAge != null">`driver_age` = #{driverAge},</if>
+            <if test="carAge != null">`car_age` = #{carAge},</if>
+            <if test="weight != null">`weight` = #{weight},</if>
+            <if test="status != null">`status` = #{status}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+        delete from t_car where id = #{value}
+    </delete>
+
+    <delete id="batchRemove">
+        delete from t_car where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

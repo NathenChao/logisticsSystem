@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">名称：</label>
+                        <div class="col-sm-8">
+                            <label class="col-sm-3 control-label" th:text="${good.title}"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">类型：</label>
+                        <div class="col-sm-8">
+                            <label class="col-sm-3 control-label" th:text="${good.type}"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">编号：</label>
+                        <div class="col-sm-8">
+                            <label class="col-sm-3 control-label" th:text="${good.number}"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">价格：</label>
+                        <div class="col-sm-8">
+                            <label class="col-sm-3 control-label" th:text="${good.price}"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">重量：</label>
+                        <div class="col-sm-8">
+                            <label class="col-sm-3 control-label" th:text="${good.weight}"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">产地：</label>
+                        <div class="col-sm-8">
+                            <label class="col-sm-3 control-label" th:text="${good.place}"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">描述：</label>
+                        <div class="col-sm-8">
+                            <label class="col-sm-3 control-label" th:text="${good.remark}"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.CustomerDao">
+
+    <select id="get" resultType="com.bootdo.system.domain.CustomerDO">
+        select `id`,`name`,`number`,`telephone`,`email`,`address`,`company` from t_customer where id = #{value}
+    </select>
+
+    <select id="list" resultType="com.bootdo.system.domain.CustomerDO">
+        select `id`,`name`,`number`,`telephone`,`email`,`address`,`company` from t_customer
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="name != null and name != ''">and name like CONCAT('%', #{name}, '%')</if>
+            <if test="number != null and number != ''">and number like CONCAT('%', #{number}, '%')</if>
+            <if test="telephone != null and telephone != ''">and telephone = #{telephone}</if>
+            <if test="email != null and email != ''">and email = #{email}</if>
+            <if test="address != null and address != ''">and address = #{address}</if>
+            <if test="company != null and company != ''">and company = #{company}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from t_customer
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="name != null and name != ''">and name like CONCAT('%', #{name}, '%')</if>
+            <if test="number != null and number != ''">and number like CONCAT('%', #{number}, '%')</if>
+            <if test="telephone != null and telephone != ''">and telephone = #{telephone}</if>
+            <if test="email != null and email != ''">and email = #{email}</if>
+            <if test="address != null and address != ''">and address = #{address}</if>
+            <if test="company != null and company != ''">and company = #{company}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.bootdo.system.domain.CustomerDO" useGeneratedKeys="true" keyProperty="id">
+        insert into t_customer
+        (
+        `name`,
+        `number`,
+        `telephone`,
+        `email`,
+        `address`,
+        `company`
+        )
+        values
+        (
+        #{name},
+        #{number},
+        #{telephone},
+        #{email},
+        #{address},
+        #{company}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.bootdo.system.domain.CustomerDO">
+        update t_customer
+        <set>
+            <if test="name != null">`name` = #{name},</if>
+            <if test="number != null">`number` = #{number},</if>
+            <if test="telephone != null">`telephone` = #{telephone},</if>
+            <if test="email != null">`email` = #{email},</if>
+            <if test="address != null">`address` = #{address},</if>
+            <if test="company != null">`company` = #{company}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+        delete from t_customer where id = #{value}
+    </delete>
+
+    <delete id="batchRemove">
+        delete from t_customer where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">客户姓名：</label>
+                        <div class="col-sm-8">
+                            <label class="col-sm-3 control-label" th:text="${order.customerName}"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">订单总金额：</label>
+                        <div class="col-sm-8">
+                            <label class="col-sm-3 control-label" th:text="${order.totalPrice}"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">订单数量：</label>
+                        <div class="col-sm-8">
+                            <label class="col-sm-3 control-label" th:text="${order.totalCount}"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">支付日期：</label>
+                        <div class="col-sm-8">
+                            <label class="col-sm-3 control-label" th:text="${order.consigneeName}"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">收货人姓名：</label>
+                        <div class="col-sm-8">
+                            <label class="col-sm-3 control-label" th:text="${order.consigneeName}"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">收货人地址：</label>
+                        <div class="col-sm-8">
+                            <label class="col-sm-3 control-label" th:text="${order.consigneeAddress}"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">收货人电话：</label>
+                        <div class="col-sm-8">
+                            <label class="col-sm-3 control-label" th:text="${order.consigneeTelephone}"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">描述：</label>
+                        <div class="col-sm-8">
+                            <label class="col-sm-3 control-label" th:text="${order.description}"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.LogisticsDao">
+
+    <select id="get" resultType="com.bootdo.system.domain.LogisticsDO">
+        select
+        `id`,`no`,`good_number`,`good_name`,`send_name`,`send_address`,`send_telephone`,`send_province`,`send_city`,`send_date`,`consignee_name`,`consignee_address`,`consignee_telephone`,`arrive_province`,`arrive_city`,`arrive_date`,`order_sn`
+        from t_logistics where id = #{value}
+    </select>
+
+    <select id="list" resultType="com.bootdo.system.domain.LogisticsDO">
+        select
+        `id`,`no`,`good_number`,`good_name`,`send_name`,`send_address`,`send_telephone`,`send_province`,`send_city`,`send_date`,`consignee_name`,`consignee_address`,`consignee_telephone`,`arrive_province`,`arrive_city`,`arrive_date`,`order_sn`
+        from t_logistics
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="no != null and no != ''">and (no like CONCAT('%', #{no}, '%') or order_sn like CONCAT('%', #{no},
+                '%'))
+            </if>
+            <if test="goodNumber != null and goodNumber != ''">and good_number = #{goodNumber}</if>
+            <if test="goodName != null and goodName != ''">and good_name = #{goodName}</if>
+            <if test="sendName != null and sendName != ''">and send_name = #{sendName}</if>
+            <if test="sendAddress != null and sendAddress != ''">and send_address = #{sendAddress}</if>
+            <if test="sendTelephone != null and sendTelephone != ''">and send_telephone = #{sendTelephone}</if>
+            <if test="sendProvince != null and sendProvince != ''">and send_province = #{sendProvince}</if>
+            <if test="sendCity != null and sendCity != ''">and send_city = #{sendCity}</if>
+            <if test="sendDate != null and sendDate != ''">and send_date = #{sendDate}</if>
+            <if test="consigneeName != null and consigneeName != ''">and consignee_name = #{consigneeName}</if>
+            <if test="consigneeAddress != null and consigneeAddress != ''">and consignee_address = #{consigneeAddress}
+            </if>
+            <if test="consigneeTelephone != null and consigneeTelephone != ''">and consignee_telephone =
+                #{consigneeTelephone}
+            </if>
+            <if test="arriveProvince != null and arriveProvince != ''">and arrive_province = #{arriveProvince}</if>
+            <if test="arriveCity != null and arriveCity != ''">and arrive_city = #{arriveCity}</if>
+            <if test="arriveDate != null and arriveDate != ''">and arrive_date = #{arriveDate}</if>
+            <if test="orderSn != null">and `order_sn` = #{orderSn}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from t_logistics
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="no != null and no != ''">and (no like CONCAT('%', #{no}, '%') or order_sn like CONCAT('%', #{no},
+                '%'))
+            </if>
+            <if test="goodNumber != null and goodNumber != ''">and good_number = #{goodNumber}</if>
+            <if test="goodName != null and goodName != ''">and good_name = #{goodName}</if>
+            <if test="sendName != null and sendName != ''">and send_name = #{sendName}</if>
+            <if test="sendAddress != null and sendAddress != ''">and send_address = #{sendAddress}</if>
+            <if test="sendTelephone != null and sendTelephone != ''">and send_telephone = #{sendTelephone}</if>
+            <if test="sendProvince != null and sendProvince != ''">and send_province = #{sendProvince}</if>
+            <if test="sendCity != null and sendCity != ''">and send_city = #{sendCity}</if>
+            <if test="sendDate != null and sendDate != ''">and send_date = #{sendDate}</if>
+            <if test="consigneeName != null and consigneeName != ''">and consignee_name = #{consigneeName}</if>
+            <if test="consigneeAddress != null and consigneeAddress != ''">and consignee_address = #{consigneeAddress}
+            </if>
+            <if test="consigneeTelephone != null and consigneeTelephone != ''">and consignee_telephone =
+                #{consigneeTelephone}
+            </if>
+            <if test="arriveProvince != null and arriveProvince != ''">and arrive_province = #{arriveProvince}</if>
+            <if test="arriveCity != null and arriveCity != ''">and arrive_city = #{arriveCity}</if>
+            <if test="arriveDate != null and arriveDate != ''">and arrive_date = #{arriveDate}</if>
+            <if test="orderSn != null">and `order_sn` = #{orderSn}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.bootdo.system.domain.LogisticsDO" useGeneratedKeys="true" keyProperty="id">
+        insert into t_logistics
+        (
+        `no`,
+        `good_number`,
+        `good_name`,
+        `send_name`,
+        `send_address`,
+        `send_telephone`,
+        `send_province`,
+        `send_city`,
+        `send_date`,
+        `consignee_name`,
+        `consignee_address`,
+        `consignee_telephone`,
+        `arrive_province`,
+        `arrive_city`,
+        `arrive_date`,
+        `order_sn`
+        )
+        values
+        (
+        #{no},
+        #{goodNumber},
+        #{goodName},
+        #{sendName},
+        #{sendAddress},
+        #{sendTelephone},
+        #{sendProvince},
+        #{sendCity},
+        #{sendDate},
+        #{consigneeName},
+        #{consigneeAddress},
+        #{consigneeTelephone},
+        #{arriveProvince},
+        #{arriveCity},
+        #{arriveDate},
+        #{orderSn}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.bootdo.system.domain.LogisticsDO">
+        update t_logistics
+        <set>
+            <if test="no != null">`no` = #{no},</if>
+            <if test="goodNumber != null">`good_number` = #{goodNumber},</if>
+            <if test="goodName != null">`good_name` = #{goodName},</if>
+            <if test="sendName != null">`send_name` = #{sendName},</if>
+            <if test="sendAddress != null">`send_address` = #{sendAddress},</if>
+            <if test="sendTelephone != null">`send_telephone` = #{sendTelephone},</if>
+            <if test="sendProvince != null">`send_province` = #{sendProvince},</if>
+            <if test="sendCity != null">`send_city` = #{sendCity},</if>
+            <if test="sendDate != null">`send_date` = #{sendDate},</if>
+            <if test="consigneeName != null">`consignee_name` = #{consigneeName},</if>
+            <if test="consigneeAddress != null">`consignee_address` = #{consigneeAddress},</if>
+            <if test="consigneeTelephone != null">`consignee_telephone` = #{consigneeTelephone},</if>
+            <if test="arriveProvince != null">`arrive_province` = #{arriveProvince},</if>
+            <if test="arriveCity != null">`arrive_city` = #{arriveCity},</if>
+            <if test="arriveDate != null">`arrive_date` = #{arriveDate},</if>
+            <if test="orderSn != null">`order_sn` = #{orderSn}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+        delete from t_logistics where id = #{value}
+    </delete>
+
+    <delete id="batchRemove">
+        delete from t_logistics where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.StorageOutputDao">
+
+    <select id="get" resultType="com.bootdo.system.domain.StorageOutputDO">
+        select `id`,`good_name`,`good_number`,`good_price`,`good_count`,`create_date` from t_storage_output where id =
+        #{value}
+    </select>
+
+    <select id="list" resultType="com.bootdo.system.domain.StorageOutputDO">
+        select `id`,`good_name`,`good_number`,`good_price`,`good_count`,`create_date` from t_storage_output
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="goodName != null and goodName != ''">and good_name = #{goodName}</if>
+            <if test="goodNumber != null and goodNumber != ''">and good_number = #{goodNumber}</if>
+            <if test="goodPrice != null and goodPrice != ''">and good_price = #{goodPrice}</if>
+            <if test="goodCount != null and goodCount != ''">and good_count = #{goodCount}</if>
+            <if test="createDate != null and createDate != ''">and create_date = #{createDate}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from t_storage_output
+        <where>
+            <if test="id != null and id != ''">and id = #{id}</if>
+            <if test="goodName != null and goodName != ''">and good_name = #{goodName}</if>
+            <if test="goodNumber != null and goodNumber != ''">and good_number = #{goodNumber}</if>
+            <if test="goodPrice != null and goodPrice != ''">and good_price = #{goodPrice}</if>
+            <if test="goodCount != null and goodCount != ''">and good_count = #{goodCount}</if>
+            <if test="createDate != null and createDate != ''">and create_date = #{createDate}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.bootdo.system.domain.StorageOutputDO" useGeneratedKeys="true" keyProperty="id">
+        insert into t_storage_output
+        (
+        `good_name`,
+        `good_number`,
+        `good_price`,
+        `good_count`,
+        `create_date`
+        )
+        values
+        (
+        #{goodName},
+        #{goodNumber},
+        #{goodPrice},
+        #{goodCount},
+        #{createDate}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.bootdo.system.domain.StorageOutputDO">
+        update t_storage_output
+        <set>
+            <if test="goodName != null">`good_name` = #{goodName},</if>
+            <if test="goodNumber != null">`good_number` = #{goodNumber},</if>
+            <if test="goodPrice != null">`good_price` = #{goodPrice},</if>
+            <if test="goodCount != null">`good_count` = #{goodCount},</if>
+            <if test="createDate != null">`create_date` = #{createDate}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+        delete from t_storage_output where id = #{value}
+    </delete>
+
+    <delete id="batchRemove">
+        delete from t_storage_output where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

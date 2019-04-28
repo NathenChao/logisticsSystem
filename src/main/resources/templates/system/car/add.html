@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">车辆类型：</label>
+                            <div class="col-sm-8">
+                                <input id="type" name="type" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">车辆名称：</label>
+                            <div class="col-sm-8">
+                                <input id="name" name="name" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">车辆牌照：</label>
+                            <div class="col-sm-8">
+                                <input id="no" name="no" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">驾驶人姓名：</label>
+                            <div class="col-sm-8">
+                                <input id="driverName" name="driverName" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">驾驶人电话：</label>
+                            <div class="col-sm-8">
+                                <input id="driverTelephone" name="driverTelephone" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">驾驶人驾龄：</label>
+                            <div class="col-sm-8">
+                                <input id="driverAge" name="driverAge" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">车龄：</label>
+                            <div class="col-sm-8">
+                                <input id="carAge" name="carAge" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">车重：</label>
+                            <div class="col-sm-8">
+                                <input id="weight" name="weight" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">车辆状态：</label>
+                            <div class="col-sm-8">
+                                <label class="radio-inline"> <input type="radio"
+                                                                    name="status" value="0"/> 未使用
+                                </label> <label class="radio-inline"> <input type="radio"
+                                                                             name="status" value="1"/> 使用中
+                            </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-3">
+                                <button type="submit" class="btn btn-primary">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/system/car/add.js">
+</script>
+</body>
+</html>
